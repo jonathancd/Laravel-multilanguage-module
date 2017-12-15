@@ -3,7 +3,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
-      <form  action="{{url('/languages/update')}}" method="post">
+      <form  action="{{url('/language/activate')}}" method="post">
         {{ csrf_field() }}
         
         <div class="modal-header">

@@ -22,16 +22,21 @@ Route::post('/login',['as' => 'login', 'uses' => 'LoginController@auth']);
 
 
 Route::group(['middleware' => 'auth'], function() {
-
+	Route::get('/logout',['as' => 'logout', 'uses' => 'LoginController@logout']);
 	Route::get('/panel', 'HomeController@index');
 
 
 	Route::group(['prefix' => 'languages'], function() {
-		Route::post('/update', 'LanguageController@update');
+		Route::get('/', 'LanguageController@index');
+		Route::get('/create', 'LanguageController@create');
+		Route::post('/', 'LanguageController@store');
+		Route::get('/{id}/edit', 'LanguageController@edit');
+		Route::post('/{id}', 'LanguageController@update');
 	});
 
 
 	Route::group(['prefix' => 'modules'], function() {
+		Route::get('/', 'ModuleController@index');
 		Route::get('/create', 'ModuleController@create');
 		Route::get('/{id}', 'ModuleController@show');
 		Route::post('/', 'ModuleController@store');
@@ -40,15 +45,18 @@ Route::group(['middleware' => 'auth'], function() {
 		
 
 		Route::get('/{id}/item/create', 'ItemController@create');
-		Route::post('/item/', 'ItemController@store');
-		Route::get('/item/{id}/edit', 'ItemController@edit');
-		Route::post('/item/{id}', 'ItemController@update');
-	
 	});
 
-	//problema si lo coloco dentro del group prefix=>modules
-	Route::post('/item/delete', 'ItemController@destroy');
 
+	Route::group(['prefix' => 'item'], function() {
+		Route::post('/', 'ItemController@store');
+		Route::get('/{id}/edit', 'ItemController@edit');
+		Route::post('/{id}', 'ItemController@update');
+	});
+
+
+	//problema si lo coloco dentro del group prefix=>modules
+	
 
 	Route::get('/module/{id_module}/language/{id_lang}/translation/create', 'TranslationController@create');
 	Route::post('/translation', 'TranslationController@store');
@@ -59,5 +67,10 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('/modules/{id}/translation/delete', 'TranslationController@destroy');
 
 	//Problema si trato de eliminar dentro del prefix modules
+	Route::post('/items/delete', 'ItemController@destroy');
 	Route::post('/module/delete', 'ModuleController@destroy');
+	Route::post('/language/delete', 'LanguageController@destroy');
+
+
+	Route::post('/language/activate', 'LanguageController@activate');
 });

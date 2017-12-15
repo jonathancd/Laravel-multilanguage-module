@@ -21,9 +21,21 @@
         <link rel="stylesheet" href="{{ url('templates') }}/css/style.css">
 
 
+
+        <link rel="stylesheet" href="{{ url('assets') }}/highlight/styles/default.css">
+        
         <style type="text/css">
           body{
             background: #fff!important;
+          }
+          td{
+            line-height: 36px;
+          }
+          .btn-delete, .btn-activate{
+            line-height: 36px;
+          }
+          .form-delete, .form-activate{
+            margin-bottom: 0px;
           }
         </style>
 
@@ -48,22 +60,52 @@
               </div><!-- menu-item -->
             </a><!-- sl-menu-link -->
 
+            <a href="{{url('/languages/')}}" class="sl-menu-link">
+              <div class="sl-menu-item">
+                <i class="menu-item-icon icon ion-quote tx-22"></i>
+                <span class="menu-item-label">Languages</span>
+              </div><!-- menu-item -->
+            </a><!-- sl-menu-link -->
 
+            <a href="{{url('/modules/')}}" class="sl-menu-link">
+              <div class="sl-menu-item">
+                <i class="menu-item-icon icon ion-ios-paper-outline tx-22"></i>
+                <span class="menu-item-label">Modules</span>
+              </div><!-- menu-item -->
+            </a><!-- sl-menu-link -->
+
+           <!--  <a href="#" class="sl-menu-link">
+              <div class="sl-menu-item">
+                <i class="menu-item-icon icon ion-quote tx-22"></i>
+                <span class="menu-item-label">Languages</span>
+                <i class="menu-item-arrow fa fa-angle-down"></i>
+              </div>
+            </a>
+            <ul class="sl-menu-sub nav flex-column">
+              <li class="nav-item"><a href="{{url('/languages/create')}}" class="nav-link"><i class="menu-item-icon icon ion-plus"></i>  Add Language</a></li>
+
+              @foreach(App\Language::orderBy('name')->get() as $language)
+                <li class="nav-item"><a href="#" class="nav-link">{{$language->name}}</a></li>
+              @endforeach
+            </ul>
+
+ -->
+ <!-- 
             <a href="#" class="sl-menu-link">
               <div class="sl-menu-item">
                 <i class="menu-item-icon icon ion-ios-paper-outline tx-22"></i>
                 <span class="menu-item-label">Modules</span>
                 <i class="menu-item-arrow fa fa-angle-down"></i>
-              </div><!-- menu-item -->
-            </a><!-- sl-menu-link -->
+              </div>
+            </a>
             <ul class="sl-menu-sub nav flex-column">
               <li class="nav-item"><a href="{{url('/modules/create')}}" class="nav-link"><i class="menu-item-icon icon ion-plus"></i>  Add Module</a></li>
 
-              @foreach(App\Module::all() as $module)
+              @foreach(App\Module::orderBy('name')->get() as $module)
                 <li class="nav-item"><a href="{{url('/modules')}}/{{$module->id}}" class="nav-link">{{$module->name}}</a></li>
               @endforeach
             </ul>
-
+ -->
           </div><!-- sl-sideleft-menu -->
 
           <br>
@@ -81,13 +123,13 @@
               <div class="dropdown">
                 <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
                   <span class="logged-name"><span class="hidden-md-down"> {{Auth::user()->name}}</span></span>
-                  <img src="../img/img3.jpg" class="wd-32 rounded-circle" alt="">
+                  <i class="icon ion-person"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-header wd-200">
                   <ul class="list-unstyled user-profile-nav">
-                    <li><a href=""><i class="icon ion-ios-person-outline"></i> Edit Profile</a></li>
-                    <li><a href=""><i class="icon ion-ios-gear-outline"></i> Settings</a></li>
-                    <li><a href=""><i class="icon ion-power"></i> Sign Out</a></li>
+                    <!-- <li><a href=""><i class="icon ion-ios-person-outline"></i> Edit Profile</a></li> -->
+                    <!-- <li><a href=""><i class="icon ion-ios-gear-outline"></i> Settings</a></li> -->
+                    <li><a href="{{url('/logout')}}"><i class="icon ion-power"></i> Sign Out</a></li>
                   </ul>
                 </div><!-- dropdown-menu -->
               </div><!-- dropdown -->
@@ -113,8 +155,7 @@
           
           <footer class="sl-footer">
             <div class="footer-left">
-              <div class="mg-b-2">Copyright &copy; 2017. Starlight. All Rights Reserved.</div>
-              <div>Made by ThemePixels.</div>
+              <div class="mg-b-2">Copyright &copy; 2017. <a href="http://athmos.co"> <strong>Athmos SAS</strong></a>. All Rights Reserved.</div>
             </div>
 
           </footer>
@@ -145,7 +186,7 @@
         <script src="{{ url('templates') }}/js/dashboard.js"></script>
 
 
-
+        <script src="{{ url('assets') }}/highlight/highlight.pack.js"></script>
        <!--  <script src="{{ url('assets') }}/BootstrapFormHelpers/dist/js/bootstrap-formhelpers.min.js"></script>
 
         <script src="{{ url('assets') }}/BootstrapFormHelpers/js/bootstrap-formhelpers-languages.js"></script>
@@ -157,6 +198,7 @@
         @yield('scripts')
         <script type="text/javascript">
           $('.data-table').dataTable( {
+            "ordering": false,
             "paging": true
           } );
 

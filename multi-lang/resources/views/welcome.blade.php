@@ -16,12 +16,11 @@
 
 @section('content')
     <div class="center-content">
-    	<img src="{{url('/assets')}}/img/LOGO_HUB_TRIBUTARIO_JPEG.jpg" class="project-logo rounded mx-auto d-block" alt="">
-
-    	<p class="actual-language">
-    		Currently language:  
+    
+    	<p class="actual-language" data-toggle="modal" data-target="#language-modal">
+    		Current language:  
     		@if(getLocalLanguage())
-    			<span data-toggle="modal" data-target="#language-modal">
+    			<span>
     				<strong>{{getLocalLanguage()->name}}</strong>
     				<img src="{{url('/assets')}}/img/flags/png/{{getLocalLanguage()->code}}.png">
     			</span>
@@ -37,6 +36,92 @@
 
     </div>
 
+
+    <div style="margin-top:25px;">
+        <div class="row">        
+            <div style="width: 100%;">
+                <div class="col-md-12">
+                    <div class="sl-page-title" style="margin-bottom: 0px!important;">
+                        <h5>Languages</h5>
+                        <div style="text-align: right;">
+                            <a class="btn btn-primary" href="{{url('/languages/create')}}">
+                                Add Language
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card mb-2">
+                        <table id="datatable1" class="table display responsive nowrap data-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Active
+                                    </th>
+                                    <th>
+                                        Flag
+                                    </th>
+                                    <th>
+                                        Iso
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(App\Language::orderBy('name')->get() as $language)
+                                    <tr>
+                                        <td>
+                                            @if($language->active == 1)
+                                                Active
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <img src="{{url('/assets')}}/img/flags/png/{{$language->code}}.png">
+                                        </td>
+                                        <td>
+                                            {{$language->code}}
+                                        </td>
+                                        <td>
+                                            {{$language->name}}
+                                        </td>
+                                        <td>
+                                            @if($language->active == 0)
+                                                <form action="{{url('/language/activate')}}" method="post" >
+                                                    {{ csrf_field() }}
+
+                                                    <input type="hidden" value="{{$language->id}}" name="language">
+                                                    <button class="table-btn" style="color: blue;" type="submit">Activate</button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{url('/languages')}}/{{
+                                            $language->id}}/edit">Edit</a>
+                                        </td>
+                                        <td>   
+                                            <form action="{{url('/language/delete')}}" method="post" >
+                                                {{ csrf_field() }}
+
+                                                <input type="hidden" value="{{$language->id}}" name="id">
+                                                <button class="table-btn" Onclick="return ConfirmDelete();" style="color: red;" type="submit">Delete</button>
+                                            </form>    
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>        
+        </div>    
+    </div>
+
+
+
     <div style="margin-top:25px;">
         <div class="row">        
             <div style="width: 100%;">
@@ -50,13 +135,11 @@
                         </div>
                     </div>
 
-                    <div class="card pd-20 pd-sm-20 mb-2">
+                    <div class="card mb-2">
                         <table id="datatable1" class="table display responsive nowrap data-table">
                             <thead>
                                 <tr>
-                                    <th>
-                                        Id
-                                    </th>
+                                    <th style="width: 50px;"></th>
                                     <th>
                                         Name
                                     </th>
@@ -65,10 +148,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach(App\Module::all() as $module)
+                                @foreach(App\Module::orderBy('name')->get() as $module)
                                     <tr>
-                                        <td>
-                                            {{$module->id}}
+                                        <td style="text-align: center;">
+                                            <a href="{{url('/modules')}}/{{$module->id}}">
+                                                <i class="menu-item-icon icon ion-eye tx-22"></i>
+                                            </a>
                                         </td>
                                         <td>
                                             {{$module->name}}

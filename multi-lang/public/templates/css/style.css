@@ -1,3 +1,7 @@
+.table-btn{
+    cursor: pointer;
+}
+
 .modal.fade .modal-dialog {
     -webkit-transition: -webkit-transform .3s ease-out;
     -o-transition: transform .3s ease-out, -o-transform .3s ease-out;

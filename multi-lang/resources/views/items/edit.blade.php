@@ -16,8 +16,9 @@
 @section('content')
     
     @if (session('status'))
-        <div class="row">
-            <div class="alert alert-dark">
+        <div class="row" style="margin-top: 10px;">
+            <div class="alert alert-dark" style="width: 100%;">
+                <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
                 {{ session('status') }}
             </div>
         </div>
@@ -27,7 +28,7 @@
     <div>
         <div class="row">        
 
-          <form action="{{url('/modules/item')}}/{{$item->id}}" method="post" class="form-content fadeIn animated">
+          <form action="{{url('/item')}}/{{$item->id}}" method="post" class="form-content fadeIn animated">
             {{ csrf_field() }}
             
             <div class="bg-gray-200">

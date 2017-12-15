@@ -14,7 +14,7 @@ class ModuleController extends Controller
 {
 
 	public function index(){
-
+		return view('modules.index');
 	}
 
 
@@ -52,7 +52,8 @@ class ModuleController extends Controller
 
 
 	public function update(Request $request, $id){
-
+		return "update on module";
+		
 		$this->validate($request,[
     		"name" => "required"
     	]);
