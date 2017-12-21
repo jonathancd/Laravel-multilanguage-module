@@ -32,7 +32,7 @@ class ModuleController extends Controller
 		$module->name = $request->name;
 
     	if($module->save()){
-    		return redirect('/panel')->with('status', "Module stored successfully.");
+    		return redirect('/modules')->with('status', "Module stored successfully.");
     	}else{
     		return redirect()->back()->with('status', "Error trying to store module.");
     	}
@@ -52,8 +52,7 @@ class ModuleController extends Controller
 
 
 	public function update(Request $request, $id){
-		return "update on module";
-		
+	
 		$this->validate($request,[
     		"name" => "required"
     	]);
@@ -64,7 +63,7 @@ class ModuleController extends Controller
     		$module->name = $request->name;
     		$module->save();
     		
-    		return redirect('/panel')->with('status', "Module updated successfully.");
+    		return redirect('/modules')->with('status', "Module updated successfully.");
     	}else{
     		return redirect()->back()->with('status', "Module not found.");
     	}
@@ -102,6 +101,7 @@ class ModuleController extends Controller
     			foreach($translations as $translation){
 	    			$translation->delete();
 	    		}
+	    		$item->delete();
     		}
 
 			$module->delete();

@@ -1,185 +1,197 @@
 @extends('template')
 
 <style type="text/css">
-	.actual-language{
-		margin-top: 25px;
-	}
-	.center-content{
-		text-align: center;
-	}
-	.project-logo{
-		max-height: 250px;
-	}
+    .guide-item{
+        margin-bottom: 25px;
+    }
 
 </style>
 
 
 @section('content')
-    <div class="center-content">
-    
-    	<p class="actual-language" data-toggle="modal" data-target="#language-modal">
-    		Current language:  
-    		@if(getLocalLanguage())
-    			<span>
-    				<strong>{{getLocalLanguage()->name}}</strong>
-    				<img src="{{url('/assets')}}/img/flags/png/{{getLocalLanguage()->code}}.png">
-    			</span>
-    		@endif
-    	</p>
-    	
-    	@if (session('status'))
-	        <div class="alert alert-dark">
-                <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
-	            {{ session('status') }}
-	        </div>
-	    @endif
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Multilanguage Installation Guide</h1>
+            <p>Laravel project to work multilanguages translations with a final system. You cand download all the files required by clicking on the Download button below. </p>
 
-    </div>
+            <p><a href="{{url('/download/multilang-files.zip')}}" class="btn btn-primary btn-large" style="color: white;">Download</a></p>
+        </div>
 
+        <div class="row guide-item">
+            <h2>Set your configurations for this project</h2>
 
-    <div style="margin-top:25px;">
-        <div class="row">        
-            <div style="width: 100%;">
+            <div class="col-md-12">
+                <p>
+                    First of all, configure this project on the .env file, with your connections to the database of the final project.
+                </p>
+            </div>
+        </div>
+
+        <div class="row guide-item">
+            <h2>Create Migrations</h2>
+            
+            <div class="col-md-12">
+                <p>
+                    For this project to work, you need to create and run the respective migrations (or just create the tables on the database). Just substitutes the function up in each migration.
+                </p>
+
+                <h5>Languages migration</h5>
                 <div class="col-md-12">
-                    <div class="sl-page-title" style="margin-bottom: 0px!important;">
-                        <h5>Languages</h5>
-                        <div style="text-align: right;">
-                            <a class="btn btn-primary" href="{{url('/languages/create')}}">
-                                Add Language
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="card mb-2">
-                        <table id="datatable1" class="table display responsive nowrap data-table">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Active
-                                    </th>
-                                    <th>
-                                        Flag
-                                    </th>
-                                    <th>
-                                        Iso
-                                    </th>
-                                    <th>
-                                        Name
-                                    </th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach(App\Language::orderBy('name')->get() as $language)
-                                    <tr>
-                                        <td>
-                                            @if($language->active == 1)
-                                                Active
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <img src="{{url('/assets')}}/img/flags/png/{{$language->code}}.png">
-                                        </td>
-                                        <td>
-                                            {{$language->code}}
-                                        </td>
-                                        <td>
-                                            {{$language->name}}
-                                        </td>
-                                        <td>
-                                            @if($language->active == 0)
-                                                <form action="{{url('/language/activate')}}" method="post" >
-                                                    {{ csrf_field() }}
-
-                                                    <input type="hidden" value="{{$language->id}}" name="language">
-                                                    <button class="table-btn" style="color: blue;" type="submit">Activate</button>
-                                                </form>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <a href="{{url('/languages')}}/{{
-                                            $language->id}}/edit">Edit</a>
-                                        </td>
-                                        <td>   
-                                            <form action="{{url('/language/delete')}}" method="post" >
-                                                {{ csrf_field() }}
-
-                                                <input type="hidden" value="{{$language->id}}" name="id">
-                                                <button class="table-btn" Onclick="return ConfirmDelete();" style="color: red;" type="submit">Delete</button>
-                                            </form>    
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                    <p>
+                        <pre>
+                            <code id="code-html" class="code php" data-clipboard-target="#code-html">
+                                public function up()
+                                {
+                                        Schema::create('languages', function (Blueprint &#36;table) {
+                                            &#36;table&#45;>increments('id');
+                                            &#36;table&#45;>string('code');
+                                            &#36;table&#45;>string('name');
+                                            &#36;table&#45;>integer('active');
+                                            &#36;table&#45;>timestamps();
+                                        });
+                                }
+                            </code>
+                        </pre>
+                    </p>
                 </div>
-            </div>        
-        </div>    
-    </div>
 
 
-
-    <div style="margin-top:25px;">
-        <div class="row">        
-            <div style="width: 100%;">
+                <h5>Modules migration</h5>
                 <div class="col-md-12">
-                    <div class="sl-page-title" style="margin-bottom: 0px!important;">
-                        <h5>Modules</h5>
-                        <div style="text-align: right;">
-                            <a class="btn btn-primary" href="{{url('/modules/create')}}">
-                                Add Module
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="card mb-2">
-                        <table id="datatable1" class="table display responsive nowrap data-table">
-                            <thead>
-                                <tr>
-                                    <th style="width: 50px;"></th>
-                                    <th>
-                                        Name
-                                    </th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach(App\Module::orderBy('name')->get() as $module)
-                                    <tr>
-                                        <td style="text-align: center;">
-                                            <a href="{{url('/modules')}}/{{$module->id}}">
-                                                <i class="menu-item-icon icon ion-eye tx-22"></i>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            {{$module->name}}
-                                        </td>
-                                        <td>
-                                            <a href="{{url('/modules')}}/{{
-                                            $module->id}}/edit">Edit</a>
-                                        </td>
-                                        <td>   
-                                            <form action="{{url('/module/delete')}}" method="post" >
-                                                {{ csrf_field() }}
-
-                                                <input type="hidden" value="{{$module->id}}" name="id">
-                                                <button Onclick="return ConfirmDelete();" style="color: red;" type="submit">Delete</button>
-                                            </form>    
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                    <p>
+                        <pre>
+                            <code id="code-html" class="code php" data-clipboard-target="#code-html">
+                                public function up()
+                                {
+                                        Schema::create('modules', function (Blueprint &#36;table) {
+                                            &#36;table&#45;>increments('id');
+                                            &#36;table&#45;>string('name');
+                                            &#36;table&#45;>timestamps();
+                                        });
+                                }
+                            </code>
+                        </pre>
+                    </p>
                 </div>
-            </div>        
-        </div>    
+
+
+                <h5>Items migration</h5>
+                <div class="col-md-12">
+                    <p>
+                        <pre>
+                            <code id="code-html" class="code php" data-clipboard-target="#code-html">
+                                public function up()
+                                {
+                                        Schema::create('items', function (Blueprint &#36;table) {
+                                            &#36;table&#45;>increments('id');
+                                            &#36;table&#45;>integer('id_module');
+                                            &#36;table&#45;>string('name');
+                                            &#36;table&#45;>string('description');
+                                            &#36;table&#45;>timestamps();
+                                        });
+                                }
+                            </code>
+                        </pre>
+                    </p>
+                </div>
+
+
+                <h5>Translations migration</h5>
+                <div class="col-md-12">
+                    <p>
+                        <pre>
+                            <code id="code-html" class="code php" data-clipboard-target="#code-html">
+                                public function up()
+                                {
+                                        Schema::create('translations', function (Blueprint &#36;table) {
+                                            &#36;table&#45;>increments('id');
+                                            &#36;table&#45;>integer('id_language');
+                                            &#36;table&#45;>integer('id_item');
+                                            &#36;table&#45;>text('value');
+                                            &#36;table&#45;>timestamps();
+                                        });
+                                }
+                            </code>
+                        </pre>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row guide-item">
+            <h2>Create Models</h2>
+            
+            <div class="col-md-12">
+                <p>
+                    For each of migration/table, create the respective model. After all, you should have the Language, Module, Item and Translation models.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="row guide-item">
+            <h2>Add the translation function to the Translation model</h2>
+            
+            <div class="col-md-12">
+                <p>
+                    The core of the system is the funcion getTranslation($item), wich you need to include in your Translation model to call it from the blade view.
+                </p>
+
+                <pre>
+                    <code id="code-html" class="code php" data-clipboard-target="#code-html">
+                            public static function getTranslation(&#36;item){
+
+                                &#36;language = Language::where('active',1)->first();
+                                &#36;item = Item::where('name', &#36;item)->first();
+
+                                if (&#36;language && $item) {
+
+                                    &#36;translation = Translation::where(['id_language' => &#36;language->id, 'id_item' => &#36;item->id])->first();
+
+                                    if(&#36;translation){
+                                        return $translation->value;
+                                    }
+                                }
+
+                                return '';
+                            }
+                    </code>
+                </pre>
+            </div>
+        </div>
+
+
+        <div class="row guide-item">
+            <h2>Print the items in your views</h2>
+            
+            <div class="col-md-12">
+                <p>
+                    After you create the modules and items with their translations, you can use the function passing the item name as parameter, in your view to get the text in the language in which the system is actually running.
+                </p>
+
+                <pre>
+                    <code id="code-html" class="code php" data-clipboard-target="#code-html">
+                        &lt;div&gt;
+                            &lt;p&gt;
+                                &#123;&#123;App&#92;Translation&#58;&#58;getTranslation&#40;&#39;item_name&#39;&#41;&#125;&#125;
+                            &lt;/p&gt;
+                        &lt;/div&gt;
+                    </code>
+                </pre>
+            </div>
+        </div>
+
     </div>
+@endsection
 
-        @include('modals.language')
 
+@section('scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('pre code').each(function(i, block) {
+                hljs.highlightBlock(block);
+            });
+        });
+    </script>
 @endsection

@@ -22,17 +22,17 @@
 
 
 
-        <link rel="stylesheet" href="{{ url('assets') }}/highlight/styles/default.css">
+        <link rel="stylesheet" href="{{ url('assets') }}/highlight/styles/atelier-heath-dark.css">
         
         <style type="text/css">
           body{
             background: #fff!important;
           }
           td{
-            line-height: 36px;
+            /*line-height: 36px;*/
           }
-          .btn-delete, .btn-activate{
-            line-height: 36px;
+          .btn-activate{
+            /*line-height: 36px;*/
           }
           .form-delete, .form-activate{
             margin-bottom: 0px;
@@ -197,10 +197,12 @@
  -->
         @yield('scripts')
         <script type="text/javascript">
-          $('.data-table').dataTable( {
-            "ordering": false,
-            "paging": true
-          } );
+          var table = $('.data-table').dataTable( {
+                        "ordering": false,
+                        "paging": true
+                      } );
+
+          table.columns.adjust().draw();
 
           function ConfirmDelete()
           {

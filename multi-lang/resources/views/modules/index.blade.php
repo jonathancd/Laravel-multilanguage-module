@@ -48,13 +48,15 @@
                             <tbody>
                                 @foreach(App\Module::orderBy('name')->get() as $module)
                                     <tr>
-                                        <td style="text-align: center;">
+                                        <td style="text-align: center; vertical-align: middle;">
                                             <a href="{{url('/modules')}}/{{$module->id}}">
                                                 <i class="menu-item-icon icon ion-eye tx-22"></i>
                                             </a>
                                         </td>
                                         <td>
-                                            {{$module->name}}
+                                            <a href="{{url('/modules')}}/{{$module->id}}">
+                                                {{$module->name}}
+                                            </a>
                                         </td>
                                         <td>
                                             <a href="{{url('/modules')}}/{{

@@ -2,6 +2,39 @@
 
 
 <style type="text/css">
+    th{
+        /*display: block!important;*/
+    }
+
+
+    .item-name{
+        white-space: normal!important;
+        width: 20%!important;
+    }
+    .item-description, .item-code{
+        white-space: normal!important;
+        width: 30%!important;
+    }
+    .item-option{
+        white-space: normal!important;
+        width: 10%!important;
+    }
+
+    .translation-item{
+        white-space: normal!important;
+        width: 25%!important;
+    }
+    .translation-value{
+        white-space: normal!important;
+        width: 55%!important;
+    }
+    .translation-option, .translation-option{
+        white-space: normal!important;
+        width: 10%!important;
+    }
+
+
+
     .nav-tabs {
         border-bottom: 1px solid #ddd;
     }
@@ -52,7 +85,7 @@
     
 
     @if (session('status'))
-        <div class="row" style="margin-top: 10px;">
+        <div style="margin-top: 10px;">
             <div class="alert alert-dark" style="width: 100%;">
                 <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
                 {{ session('status') }}
@@ -74,40 +107,40 @@
                         <table id="datatable1" class="table display responsive nowrap data-table">
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th class="item-name" style="width: 20%!important;">
                                         Name
                                     </th>
-                                    <th>
+                                    <th class="item-description" style="width: 30%!important;">
                                         Description
                                     </th>
-                                    <th>
+                                    <th class="item-code" style="width: 30%!important;">
                                         PHP code
                                     </th>
-                                    <th></th>
-                                    <th></th>
+                                    <th class="item-option"></th>
+                                    <th class="item-option"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($items as $item)
                                 <tr>
-                                    <td>
+                                    <td class="item-name">
                                         {{$item->name}}
                                     </td>
-                                    <td>
+                                    <td  class="item-description">
                                         {{$item->description}}
                                     </td>
-                                    <td style="display: block;">
+                                    <td class="item-code">
                                         <!-- <pre> -->
                                             <code id=code-php class="code xml" data-clipboard-target="#code-php">
                                                 &#123;&#123;App&#92;Translation&#58;&#58;getTranslation&#40;&#39;{{$item->name}}&#39;&#41;&#125;&#125;
                                             </code>
                                         <!-- </pre> -->
                                     </td>
-                                    <td style="display: block;">
+                                    <td  class="item-option">
                                         <a href="{{url('/item')}}/{{
                                         $item->id}}/edit">Edit</a>
                                     </td>
-                                    <td style="display: block;">   
+                                    <td  class="item-option">   
                                         <form action="{{url('/items/delete')}}" method="post" class="form-delete">
                                             {{ csrf_field() }}
 
@@ -167,16 +200,16 @@
                                     <table id="datatable1" class="table display responsive nowrap data-table">
                                         <thead>
                                             <tr>
-                                                <th>
+                                                <th class="translation-item">
                                                     Item
                                                 </th>
-                                                <th>
+                                                <th class="translation-value">
                                                     Translation
                                                 </th>
-                                                <th>
+                                                <th class="translation-option">
                                                     
                                                 </th>
-                                                <th>
+                                                <th class="translation-option">
                                                     
                                                 </th>
 
@@ -188,17 +221,17 @@
                                                 @if($translation->id_item == $item->id)
                                                     @if($translation->id_language == $language->id)
                                                         <tr>
-                                                            <td>
+                                                            <td class="translation-item">
                                                                 {{$item->name}}
                                                             </td>
-                                                            <td>
+                                                            <td class="translation-value">
                                                                 {{$translation->value}}
                                                             </td>
                                                                 
-                                                            <td>
+                                                            <td class="translation-option">
                                                                 <a href="{{url('/modules')}}/{{$module->id}}/translation/{{$translation->id}}/edit">Edit</a>
                                                             </td>
-                                                            <td>
+                                                            <td class="translation-option">
                                                                 <form action="{{url('/modules')}}/{{$module->id}}/translation/delete" method="post" class="form-delete">
                                                                     {{ csrf_field() }}
 
@@ -231,16 +264,16 @@
                                     <table id="datatable1" class="table display responsive nowrap data-table">
                                         <thead>
                                             <tr>
-                                                <th>
+                                                <th class="translation-item">
                                                     Item
                                                 </th>
-                                                <th>
+                                                <th class="translation-value">
                                                     Translation
                                                 </th>
-                                                <th>
+                                                <th class="translation-option">
                                                     
                                                 </th>
-                                                <th>
+                                                <th class="translation-option">
                                                     
                                                 </th>
 
@@ -252,17 +285,17 @@
                                                 @if($translation->id_item == $item->id)
                                                     @if($translation->id_language == $language->id)
                                                         <tr>
-                                                            <td>
+                                                            <td class="translation-item">
                                                                 {{$item->name}}
                                                             </td>
-                                                            <td>
+                                                            <td class="translation-value">
                                                                 {{$translation->value}}
                                                             </td>
                                                                 
-                                                            <td>
+                                                            <td class="translation-option">
                                                                 <a href="{{url('/modules')}}/{{$module->id}}/translation/{{$translation->id}}/edit">Edit</a>
                                                             </td>
-                                                            <td>
+                                                            <td class="translation-option">
                                                                 <form action="{{url('/modules')}}/{{$module->id}}/translation/delete" method="post" class="form-delete">
                                                                     {{ csrf_field() }}
 

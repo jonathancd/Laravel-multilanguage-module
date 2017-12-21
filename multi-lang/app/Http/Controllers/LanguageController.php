@@ -33,7 +33,7 @@ class LanguageController extends Controller
         $language->active = 0;
 
         if($language->save()){
-            return redirect('/panel')->with('status', "Language stored successfully.");
+            return redirect('/languages')->with('status', "Language stored successfully.");
         }else{
             return redirect()->back()->with('status', "Error trying to store module.");
         }
@@ -64,7 +64,7 @@ class LanguageController extends Controller
             $language->name = $request->name;
 
             if($language->save()){
-                return redirect('/panel')->with('status', "Language updated successfully.");
+                return redirect('/languages')->with('status', "Language updated successfully.");
             }else{
                 return redirect()->back()->with('status', "Error trying to update language.");
             }

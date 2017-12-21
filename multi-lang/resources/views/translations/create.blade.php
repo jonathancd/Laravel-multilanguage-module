@@ -16,7 +16,7 @@
 @section('content')
     
     @if (session('status'))
-        <div class="row">
+        <div>
             <div class="alert alert-dark">
                 <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
                 {{ session('status') }}
