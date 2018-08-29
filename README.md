@@ -1,2 +1,2 @@
-# athmos-multilenguage
-Sistema para manejar el multilenguaje en sistemas paralelamente
+# Laravel-multilenguage
+Módulo para manejar internamente el multilenguaje en sistemas de Laravel.
