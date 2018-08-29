@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
  
-        <title>Athmos - Multilenguage admin</title>
+        <title>Multilenguage admin</title>
 
         <!-- vendor css -->
         <link href="{{ url('templates') }}/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
